@@ -43,3 +43,8 @@ table {
     thead td {
     background-color: orange;
     }
+
+    .selectedFilter span {
+        color: green;
+        
+    }
