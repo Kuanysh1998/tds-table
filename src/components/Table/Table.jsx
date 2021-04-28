@@ -1,5 +1,8 @@
 import styles from './Table.module.css'
 import ReusableTable from '../ReusableComponents/ReusableTable'
+import React from 'react'
+import { Form, Formik, Field, ErrorMessage} from "formik"
+import * as Yup from "yup"
 
 
 function Table(props) {
@@ -52,11 +55,29 @@ function Table(props) {
         const finalSortedUsers = [...uniqueSet]
         props.setByAgesDecreasing(finalSortedUsers)
     }
-        
+    
+    
 
 
     return <div>
         <div>
+            <div>
+                <span>
+                    How many users you want to see? <Formik  initialValues = {{
+            amountOfUsers: props.showAmountUsers,
+        
+        }}
+        validationSchema = {Yup.object({
+            amountOfUsers: Yup.number()
+            .min(1, 'At least 1 user')
+            .max(5000, 'Maximum 5000 users')
+            
+        })}
+        onSubmit = {(values) => props.getUsers(values.amountOfUsers)}><Form>
+        <Field name={'amountOfUsers'} placeholder={'amount'}>
+               </Field> <div><ErrorMessage name = 'amountOfUsers'/></div> <button type = 'submit'>Submit</button></Form></Formik>
+                </span>
+            </div> 
         <span>
             Filter by gender: <button onClick = {props.setMaleUsers}>Male</button> <button onClick = {props.setFemaleUsers} >Female</button>
         </span>

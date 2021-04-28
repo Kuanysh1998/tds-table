@@ -5,8 +5,10 @@ const SET_MALE_USERS = 'SET-MALE-USERS'
 const SET_FEMALE_USERS = 'SET-FEMALE-USERS'
 const SET_BY_AGES_INCREASING = 'SET-BY-AGES-INCREASING'
 const SET_BY_AGES_DECREASING = 'SET-BY-AGES-DECREASING'
+const SET_AMOUNT_USERS = 'SET-AMOUNT-USERS'
 let initialState = {
-    usersData:[],
+    showAmountUsers: 20,
+    usersData: []
 
 }
 
@@ -41,6 +43,11 @@ const tdsTableReducer = (state = initialState, action) => {
                 ...state,
                 usersData: action.sortedUsers
             }
+        case SET_AMOUNT_USERS:
+            return {
+                ...state,
+                showAmountUsers: action.amount
+            }
         default:
             return state;
     }
@@ -52,6 +59,7 @@ export const getUsers = (count = 20) => {
         usersAPI.getUsers(count)
             .then(response=>{
                 dispatch(setUsers(response.data.results));
+                dispatch(setAmountUsers(count))
                              
             })
     }
@@ -77,6 +85,10 @@ export const setByAgesIncreasing = (sortedUsers) => {
 
 export const setByAgesDecreasing = (sortedUsers) => {
     return {type: SET_BY_AGES_DECREASING, sortedUsers}
+}
+
+export const setAmountUsers = (amount) => {
+    return {type: SET_AMOUNT_USERS, amount}
 }
 
 
